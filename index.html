@@ -179,8 +179,9 @@
       <div class="actions">
         <button type="submit" class="primary">Done (Clear Form)</button>
         <button type="button" class="secondary" id="printBtn">Print / Save as PDF</button>
+        <button type="button" class="secondary" id="copyBtn">Copy Answers</button>
         <button type="reset" class="danger" title="Erase everything">Clear Now</button>
-      </div>
+      </div>        
 
       <div id="notice" class="notice" role="status" aria-live="polite">
         Form was cleared. Nothing was saved or sent.
@@ -220,3 +221,30 @@
   </script>
 </body>
 </html>
+document.getElementById('copyBtn').addEventListener('click', () => {
+  let formData = [];
+  const elements = form.elements;
+
+  for (let el of elements) {
+    if (!el.name) continue; // skip buttons
+
+    let value = '';
+    if (el.type === 'radio') {
+      if (el.checked) value = el.value;
+      else continue;
+    } else if (el.type === 'checkbox') {
+      value = el.checked ? 'Yes' : 'No';
+    } else {
+      value = el.value;
+    }
+
+    formData.push(`${el.labels ? el.labels[0].innerText : el.name}: ${value}`);
+  }
+
+  const textToCopy = formData.join('\\n');
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    notice.innerText = "Form answers copied to clipboard!";
+    notice.style.display = 'block';
+    setTimeout(() => notice.style.display = 'none', 3000);
+  });
+});
