@@ -169,87 +169,79 @@
       </form>
     </main>
   </div>
+  
+<script>
+  const form = document.getElementById('intakeForm');
+  const notice = document.getElementById('notice');
 
-  <script>
-    // References
-    const form = document.getElementById('intakeForm');
-    const notice = document.getElementById('notice');
+  // Ensure no persisted values
+  window.addEventListener('pageshow', (e) => { if (e.persisted) form.reset(); });
 
-    // Ensure fields are not auto-filled or persisted on back/forward navigation
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) form.reset();
+  // Block default submission
+  form.addEventListener('submit', (e) => e.preventDefault());
+
+  // Done button clears form
+  document.getElementById('doneBtn').addEventListener('click', () => {
+    form.reset();
+    showNotice("Form cleared. Nothing was saved or sent.");
+  });
+
+  // Print button
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  // Copy Answers button
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    let output = [];
+
+    // Loop through fieldsets so we can include section headers
+    form.querySelectorAll("fieldset").forEach(fs => {
+      const legend = fs.querySelector("legend");
+      if (legend) output.push(`=== ${legend.innerText.trim()} ===`);
+
+      fs.querySelectorAll(".field").forEach(f => {
+        const label = f.dataset.question || "";
+        let value = "";
+
+        // Handle radios separately
+        const radios = f.querySelectorAll("input[type=radio]");
+        if (radios.length) {
+          const checked = f.querySelector("input[type=radio]:checked");
+          value = checked ? checked.value : "";
+        } else {
+          const el = f.querySelector("input, textarea, select");
+          if (el) value = el.value.trim();
+        }
+
+        output.push(`${label}: ${value}`);
+      });
+
+      output.push(""); // blank line after each section
     });
 
-    // Prevent any accidental form submission via Enter keys
-    form.addEventListener('submit', (e) => e.preventDefault());
+    const text = output.join("\n");
 
-    // Reset via Done button - intentionally clears (no network)
-    document.getElementById('doneBtn').addEventListener('click', () => {
-      form.reset();
-      showNotice('Form cleared. Nothing was saved or sent.');
-    });
-
-    // Print / Save as PDF
-    document.getElementById('printBtn').addEventListener('click', () => window.print());
-
-    // Copy Answers functionality
-    document.getElementById('copyBtn').addEventListener('click', async () => {
-      try {
-        const lines = [];
-        // Loop over fieldsets so we can include section headers
-        const fieldsets = form.querySelectorAll('fieldset');
-        fieldsets.forEach(fs => {
-          const legend = fs.querySelector('legend');
-          if (legend) lines.push(legend.innerText.trim());
-          const fields = fs.querySelectorAll('.field');
-          fields.forEach(f => {
-            const question = (f.dataset.question || '').trim();
-            // find the input/select/textarea inside this field wrapper
-            const input = f.querySelector('input, textarea, select');
-            if (!input) return;
-            let value = '';
-            if (input.type === 'radio') {
-              const checked = f.querySelector('input[type="radio"]:checked');
-              value = checked ? checked.value : '';
-            } else if (input.type === 'checkbox') {
-              value = input.checked ? 'Yes' : 'No';
-            } else {
-              value = input.value ? input.value.trim() : '';
-            }
-            lines.push(`${question}: ${value}`);
-          });
-          lines.push(''); // blank line after each section
-        });
-
-        const text = lines.join('\\n').replace(/\\n{2,}/g, '\\n\\n').trim();
-        if (!navigator.clipboard) throw new Error('Clipboard API not available');
-        await navigator.clipboard.writeText(text || '(no answers entered)');
-        showNotice('Form answers copied to clipboard!');
-      } catch (err) {
-        console.error('Copy failed', err);
-        showNotice('Copy failed — please select and copy manually.');
-      }
-    });
-
-    // Small helper to show temporary notices
-    function showNotice(msg) {
-      notice.textContent = msg;
-      notice.style.display = 'block';
-      setTimeout(() => {
-        notice.style.display = 'none';
-        notice.textContent = '';
-      }, 3000);
+    try {
+      await navigator.clipboard.writeText(text);
+      showNotice("Form answers copied to clipboard!");
+    } catch (err) {
+      console.error(err);
+      showNotice("Copy failed — please select and copy manually.");
     }
+  });
 
-    // Always ensure inputs don't signal browser to autosave
-    Array.from(form.elements).forEach(el => {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-        el.setAttribute('autocomplete', 'off');
-        // remove any default value attributes
-        if (el.defaultValue) el.defaultValue = '';
-      }
-    });
+  function showNotice(msg) {
+    notice.textContent = msg;
+    notice.style.display = "block";
+    setTimeout(() => { notice.style.display = "none"; }, 3000);
+  }
 
-  </script>
+  // Disable autofill
+  Array.from(form.elements).forEach(el => {
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName)) {
+      el.setAttribute("autocomplete", "off");
+    }
+  });
+</script>
+  
 </body>
 </html>
