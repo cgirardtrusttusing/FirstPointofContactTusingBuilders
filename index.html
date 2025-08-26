@@ -1,247 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>📞 First Contact Template – First Call</title>
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <meta name="robots" content="noindex, nofollow" />
   <style>
-    :root { --bg:#f7f8fb; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:linear-gradient(180deg,#eef2f7,var(--bg));padding:24px;}
-    .container{max-width:980px;margin:0 auto;}
-    h1{margin:0 0 6px;font-size:1.4rem}
-    p.subtitle{margin:0 0 18px;color:var(--muted)}
-    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 8px 28px rgba(2,6,23,.07);border:1px solid rgba(2,6,23,.05);}
-    fieldset{border:1px dashed rgba(2,6,23,.10);padding:14px;border-radius:10px;margin:14px 0}
-    legend{padding:0 8px;color:var(--muted);font-weight:600}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
-    .col-12{grid-column:span 12}
-    .col-8{grid-column:span 8}
-    .col-6{grid-column:span 6}
-    .col-4{grid-column:span 4}
-    label.question{display:block;font-size:.9rem;margin-bottom:6px}
-    input,select,textarea{width:100%;padding:9px 10px;border-radius:8px;border:1px solid rgba(2,6,23,.12);font-size:1rem}
-    textarea{min-height:88px;resize:vertical}
-    .small{font-size:.88rem;color:var(--muted);margin-top:6px}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    button{border:none;padding:10px 14px;border-radius:999px;font-weight:600;cursor:pointer;box-shadow:0 6px 16px rgba(2,6,23,.06)}
-    .primary{background:var(--brand);color:#fff}
-    .secondary{background:#eef2f3}
-    .danger{background:#ef4444;color:#fff}
-    .notice{display:none;margin-top:12px;padding:10px;border-radius:8px;background:#ecfeff;border:1px solid #a5f3fc;color:#0b7285}
-    @media (max-width:720px){.col-8,.col-6,.col-4{grid-column:span 12}}
-    @media print{
-      .actions,.notice{display:none!important}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 2rem;
+      line-height: 1.4;
     }
-    /* small helper styling for inline radio labels */
-    .inline-label{margin-right:14px; font-weight:500}
-    .field { margin-bottom:6px; }
+    h1 { text-align: center; }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    fieldset {
+      margin-bottom: 1.5rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+    legend { font-weight: bold; }
+    label { display: block; margin-top: .7rem; font-weight: bold; }
+    input, textarea {
+      width: 100%;
+      padding: .5rem;
+      margin-top: .3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    textarea { resize: vertical; }
+    .radio-group { margin-top: .3rem; }
+    button {
+      margin: .5rem .25rem;
+      padding: .6rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #doneBtn { background: #dc3545; color: #fff; }
+    #printBtn { background: #0d6efd; color: #fff; }
+    #copyBtn { background: #198754; color: #fff; }
+    #notice {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #198754;
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>📞 First Contact Template – First Call</h1>
-      <p class="subtitle">This is a local static form: nothing is sent or stored. Use <strong>Copy Answers</strong> to grab a text summary, or <strong>Print</strong> to save a PDF.</p>
-    </header>
+  <h1>📞 First Contact Template – First Call</h1>
 
-    <main class="card">
-      <form id="intakeForm" autocomplete="off" spellcheck="false" novalidate>
-        <!-- Client Information -->
-        <fieldset>
-          <legend>Client Information</legend>
-          <div class="grid">
-            <div class="col-8 field" data-question="Name">
-              <label class="question" for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="off" />
-            </div>
-
-            <div class="col-4 field" data-question="Phone Number">
-              <label class="question" for="phone">Phone Number</label>
-              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="off" placeholder="(555) 555-5555" />
-            </div>
-
-            <div class="col-6 field" data-question="Email Address">
-              <label class="question" for="email">Email Address</label>
-              <input id="email" name="email" type="email" inputmode="email" autocomplete="off" />
-            </div>
-
-            <div class="col-6 field" data-question="Address">
-              <label class="question" for="address">Address</label>
-              <input id="address" name="address" type="text" autocomplete="off" />
-            </div>
-
-            <div class="col-8 field" data-question="City">
-              <label class="question" for="city">City</label>
-              <input id="city" name="city" type="text" autocomplete="off" />
-            </div>
-
-            <div class="col-4 field" data-question="Zip Code">
-              <label class="question" for="zip">Zip Code</label>
-              <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" />
-            </div>
-
-            <div class="col-6 field" data-question="Have you worked with us before?">
-              <label class="question">Have you worked with us before?</label>
-              <label class="inline-label"><input type="radio" name="workedBefore" value="Yes"> Yes</label>
-              <label class="inline-label"><input type="radio" name="workedBefore" value="No"> No</label>
-            </div>
-
-            <div class="col-6 field" data-question="How did you hear about us?">
-              <label class="question" for="referral">How did you hear about us?</label>
-              <select id="referral" name="referral" autocomplete="off">
-                <option value="">Select…</option>
-                <option>Google Search</option>
-                <option>Social Media</option>
-                <option>Friend / Family</option>
-                <option>Repeat Client</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="col-12 field" data-question="Do you remember who you worked with?">
-              <label class="question" for="workedWith">Do you remember who you worked with?</label>
-              <input id="workedWith" name="workedWith" type="text" autocomplete="off" />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Project Information -->
-        <fieldset>
-          <legend>Project Information</legend>
-          <div class="grid">
-            <div class="col-12 field" data-question="Project Address">
-              <label class="question" for="projectAddress">Project Address</label>
-              <input id="projectAddress" name="projectAddress" type="text" autocomplete="off" />
-            </div>
-
-            <div class="col-6 field" data-question="Do you have a timeline in mind?">
-              <label class="question" for="timeline">Do you have a timeline in mind?</label>
-              <input id="timeline" name="timeline" type="text" autocomplete="off" />
-            </div>
-
-            <div class="col-6 field" data-question="Best Time to Contact">
-              <label class="question" for="bestTime">Best Time to Contact</label>
-              <input id="bestTime" name="bestTime" type="text" placeholder="e.g., Weekdays after 3pm" autocomplete="off" />
-            </div>
-
-            <div class="col-12 field" data-question="Scope of Work">
-              <label class="question" for="scope">Scope of Work</label>
-              <textarea id="scope" name="scope" autocomplete="off"></textarea>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Roofing -->
-        <fieldset>
-          <legend>For Roofing Projects (if applicable)</legend>
-          <div class="grid">
-            <div class="col-6 field" data-question="Is the roof currently leaking?">
-              <label class="question">Is the roof currently leaking?</label>
-              <label class="inline-label"><input type="radio" name="leaking" value="Yes"> Yes</label>
-              <label class="inline-label"><input type="radio" name="leaking" value="No"> No</label>
-            </div>
-
-            <div class="col-6 field" data-question="How many stories is your building?">
-              <label class="question" for="stories">How many stories is your building?</label>
-              <input id="stories" name="stories" type="number" min="1" step="1" inputmode="numeric" autocomplete="off" />
-            </div>
-
-            <div class="col-12 field" data-question="Notes">
-              <label class="question" for="notes">Notes</label>
-              <textarea id="notes" name="notes" autocomplete="off"></textarea>
-            </div>
-          </div>
-        </fieldset>
-
-        <div class="actions">
-          <button type="button" id="doneBtn" class="primary">Done (Clear Form)</button>
-          <button type="button" id="printBtn" class="secondary">Print / Save as PDF</button>
-          <button type="button" id="copyBtn" class="secondary">Copy Answers</button>
-          <button type="reset" id="clearBtn" class="danger" title="Erase everything">Clear Now</button>
+  <form id="intakeForm" autocomplete="off">
+    <fieldset>
+      <legend>Client Information</legend>
+      <div class="field" data-question="Name">
+        <label>Name:</label>
+        <input type="text" name="name">
+      </div>
+      <div class="field" data-question="Phone Number">
+        <label>Phone Number:</label>
+        <input type="tel" name="phone">
+      </div>
+      <div class="field" data-question="Email Address">
+        <label>Email Address:</label>
+        <input type="email" name="email">
+      </div>
+      <div class="field" data-question="Address">
+        <label>Address:</label>
+        <input type="text" name="address">
+      </div>
+      <div class="field" data-question="City">
+        <label>City:</label>
+        <input type="text" name="city">
+      </div>
+      <div class="field" data-question="Zip Code">
+        <label>Zip Code:</label>
+        <input type="text" name="zip">
+      </div>
+      <div class="field" data-question="Have you worked with us before?">
+        <label>Have you worked with us before?</label>
+        <div class="radio-group">
+          <input type="radio" name="workedBefore" value="Yes"> Yes
+          <input type="radio" name="workedBefore" value="No"> No
         </div>
+      </div>
+      <div class="field" data-question="How did you hear about us">
+        <label>How did you hear about us?</label>
+        <input type="text" name="referral">
+      </div>
+      <div class="field" data-question="Do you remember who you worked with?">
+        <label>Do you remember who you worked with?</label>
+        <input type="text" name="whoWorkedWith">
+      </div>
+    </fieldset>
 
-        <div id="notice" class="notice" role="status" aria-live="polite"></div>
-      </form>
-    </main>
-  </div>
-  
-<script>
-  const form = document.getElementById('intakeForm');
-  const notice = document.getElementById('notice');
+    <fieldset>
+      <legend>Project Information</legend>
+      <div class="field" data-question="Project Address">
+        <label>Project Address:</label>
+        <input type="text" name="projectAddress">
+      </div>
+      <div class="field" data-question="Timeline">
+        <label>Do you have a timeline in mind?</label>
+        <input type="text" name="timeline">
+      </div>
+      <div class="field" data-question="Scope of Work">
+        <label>Scope of Work:</label>
+        <textarea name="scope"></textarea>
+      </div>
+      <div class="field" data-question="Best Time to Contact">
+        <label>Best Time to Contact:</label>
+        <input type="text" name="bestTime">
+      </div>
+    </fieldset>
 
-  // Ensure no persisted values
-  window.addEventListener('pageshow', (e) => { if (e.persisted) form.reset(); });
+    <fieldset>
+      <legend>For Roofing Projects (if applicable)</legend>
+      <div class="field" data-question="Is the roof currently leaking?">
+        <label>Is the roof currently leaking?</label>
+        <div class="radio-group">
+          <input type="radio" name="roofLeaking" value="Yes"> Yes
+          <input type="radio" name="roofLeaking" value="No"> No
+        </div>
+      </div>
+      <div class="field" data-question="How many stories is your building?">
+        <label>How many stories is your building?</label>
+        <input type="number" name="stories">
+      </div>
+      <div class="field" data-question="Notes">
+        <label>Notes:</label>
+        <textarea name="notes"></textarea>
+      </div>
+    </fieldset>
 
-  // Block default submission
-  form.addEventListener('submit', (e) => e.preventDefault());
+    <div style="text-align:center;">
+      <button type="button" id="copyBtn">Copy Answers</button>
+      <button type="button" id="printBtn">Print</button>
+      <button type="button" id="doneBtn">Done</button>
+    </div>
 
-  // Done button clears form
-  document.getElementById('doneBtn').addEventListener('click', () => {
-    form.reset();
-    showNotice("Form cleared. Nothing was saved or sent.");
-  });
+    <div id="notice"></div>
+  </form>
 
-  // Print button
-  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  <script>
+    const form = document.getElementById('intakeForm');
+    const notice = document.getElementById('notice');
 
-  // Copy Answers button
-  document.getElementById('copyBtn').addEventListener('click', async () => {
-    let output = [];
+    // Reset form if back/forward cache is used
+    window.addEventListener('pageshow', (e) => { if (e.persisted) form.reset(); });
 
-    // Loop through fieldsets so we can include section headers
-    form.querySelectorAll("fieldset").forEach(fs => {
-      const legend = fs.querySelector("legend");
-      if (legend) output.push(`=== ${legend.innerText.trim()} ===`);
+    // Prevent accidental submit
+    form.addEventListener('submit', (e) => e.preventDefault());
 
-      fs.querySelectorAll(".field").forEach(f => {
-        const label = f.dataset.question || "";
-        let value = "";
-
-        // Handle radios separately
-        const radios = f.querySelectorAll("input[type=radio]");
-        if (radios.length) {
-          const checked = f.querySelector("input[type=radio]:checked");
-          value = checked ? checked.value : "";
-        } else {
-          const el = f.querySelector("input, textarea, select");
-          if (el) value = el.value.trim();
-        }
-
-        output.push(`${label}: ${value}`);
-      });
-
-      output.push(""); // blank line after each section
+    // Done button clears form
+    document.getElementById('doneBtn').addEventListener('click', () => {
+      form.reset();
+      showNotice("Form cleared. Nothing was saved or sent.");
     });
 
-    const text = output.join("\n");
+    // Print button
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
 
-    try {
-      await navigator.clipboard.writeText(text);
-      showNotice("Form answers copied to clipboard!");
-    } catch (err) {
-      console.error(err);
-      showNotice("Copy failed — please select and copy manually.");
+    // Copy Answers button (with fallback)
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      let output = [];
+
+      form.querySelectorAll("fieldset").forEach(fs => {
+        const legend = fs.querySelector("legend");
+        if (legend) output.push(`=== ${legend.innerText.trim()} ===`);
+
+        fs.querySelectorAll(".field").forEach(f => {
+          const label = f.dataset.question || "";
+          let value = "";
+
+          const radios = f.querySelectorAll("input[type=radio]");
+          if (radios.length) {
+            const checked = f.querySelector("input[type=radio]:checked");
+            value = checked ? checked.value : "";
+          } else {
+            const el = f.querySelector("input, textarea, select");
+            if (el) value = el.value.trim();
+          }
+          output.push(`${label}: ${value}`);
+        });
+
+        output.push("");
+      });
+
+      const text = output.join("\n");
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showNotice("Form answers copied to clipboard!");
+      } catch (err) {
+        console.warn("Clipboard API failed, using fallback:", err);
+
+        // Fallback: hidden textarea trick
+        const fallbackBox = document.createElement("textarea");
+        fallbackBox.value = text;
+        document.body.appendChild(fallbackBox);
+        fallbackBox.select();
+        document.execCommand("copy");
+        document.body.removeChild(fallbackBox);
+
+        showNotice("Copied using fallback method (works in Chrome).");
+      }
+    });
+
+    function showNotice(msg) {
+      notice.textContent = msg;
+      notice.style.display = "block";
+      setTimeout(() => { notice.style.display = "none"; }, 3000);
     }
-  });
 
-  function showNotice(msg) {
-    notice.textContent = msg;
-    notice.style.display = "block";
-    setTimeout(() => { notice.style.display = "none"; }, 3000);
-  }
-
-  // Disable autofill
-  Array.from(form.elements).forEach(el => {
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName)) {
-      el.setAttribute("autocomplete", "off");
-    }
-  });
-</script>
-  
+    // Disable autofill
+    Array.from(form.elements).forEach(el => {
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName)) {
+        el.setAttribute("autocomplete", "off");
+      }
+    });
+  </script>
 </body>
 </html>
